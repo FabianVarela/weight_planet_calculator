@@ -134,8 +134,8 @@ class RotationItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 130,
-      height: 130,
+      width: 120,
+      height: 120,
       child: Stack(
         overflow: Overflow.visible,
         children: <Widget>[
@@ -144,10 +144,7 @@ class RotationItem extends StatelessWidget {
               width: _diameter * _constDiameter,
               height: _diameter * _constDiameter,
               decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(asset),
-                  fit: BoxFit.cover,
-                ),
+                image: DecorationImage(image: AssetImage(asset)),
                 shape: BoxShape.circle,
               ),
             ),
