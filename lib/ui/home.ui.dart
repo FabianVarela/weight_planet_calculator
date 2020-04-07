@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:weight_planet_calculator/model/planet.model.dart';
 import 'package:weight_planet_calculator/ui/custom_clippath.dart';
+import 'package:weight_planet_calculator/ui/rotation_list_animation.dart';
 
 class Home extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => HomeState();
 }
 
-class HomeState extends State<Home> with TickerProviderStateMixin {
+class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   final TextEditingController _weightController = TextEditingController();
 
   int _radioValue = 0;
@@ -14,6 +16,8 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
 
   AnimationController _animationController;
   Animation<double> _animation;
+
+  int _currentIndex = 0;
 
   @override
   void initState() {
@@ -52,13 +56,13 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
 
   Widget _setHeader() {
     return Container(
-      height: 250,
+      height: MediaQuery.of(context).size.height * 0.34,
       child: Stack(
         children: <Widget>[
           ClipPath(
             clipper: HeaderClipPath(),
             child: Container(
-              height: 200,
+              height: MediaQuery.of(context).size.height * 0.3,
               width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.symmetric(horizontal: 12),
               decoration: BoxDecoration(color: Theme.of(context).primaryColor),
@@ -76,19 +80,17 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
             ),
           ),
           Positioned(
-            top: 110,
+            top: MediaQuery.of(context).size.height * 0.19,
             child: Container(
               width: MediaQuery.of(context).size.width,
-              child: Align(
-                alignment: Alignment.center,
-                child: Image.asset(
-                  'images/planet.png',
-                  height: 150,
-                  fit: BoxFit.contain,
-                ),
+              child: RotationListAnimation(
+                size: MediaQuery.of(context).size,
+                isReverse: true,
+                assetList: planets.map((Planet p) => p.asset).toList(),
+                currentIndex: _currentIndex,
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -102,17 +104,23 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(bottom: 25),
+            padding: EdgeInsets.only(bottom: 20),
             child: _setTextField(),
           ),
           Padding(
-            padding: EdgeInsets.only(bottom: 25),
-            child: _setRadioButtonList(),
+            padding: EdgeInsets.only(bottom: 20),
+            child: _setAnimationText(),
           ),
           Padding(
             padding: EdgeInsets.only(bottom: 5),
-            child: _setAnimationText(),
-          )
+            child: Wrap(
+              children: <Widget>[
+                for (int i = 0; i < planets.length; i++)
+                  _setRadioButton(planets[i].name, i, planets[i].weightGravity,
+                      planets[i].color)
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -122,6 +130,7 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
     return TextField(
       controller: _weightController,
       keyboardType: TextInputType.number,
+      textInputAction: TextInputAction.done,
       decoration: InputDecoration(
         labelText: 'Your weight on earth',
         hintText: 'In pounds',
@@ -133,31 +142,26 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
     );
   }
 
-  Widget _setRadioButtonList() {
+  Widget _setRadioButton(
+      String title, int radioValue, double weightValue, Color color) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: <Widget>[
-        _setRadioButton('Pluto', 0, Colors.brown),
-        _setRadioButton('Mars', 1, Colors.redAccent),
-        _setRadioButton('Venus', 2, Colors.orangeAccent),
-      ],
-    );
-  }
-
-  Widget _setRadioButton(String title, int radioValue, Color color) {
-    return Row(
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Radio<int>(
           activeColor: color,
           value: radioValue,
           groupValue: _radioValue,
-          onChanged: (int value) => _handleRadioValueChanged(value, title),
+          onChanged: (int value) =>
+              _handleRadioValueChanged(radioValue, title, weightValue),
         ),
         GestureDetector(
-          onTap: () => _handleRadioValueChanged(radioValue, title),
-          child: Text(
-            title,
-            style: TextStyle(color: Colors.black38),
+          onTap: () => _handleRadioValueChanged(radioValue, title, weightValue),
+          child: Padding(
+            padding: EdgeInsets.only(right: 5),
+            child: Text(
+              title,
+              style: TextStyle(color: Colors.black38),
+            ),
           ),
         ),
       ],
@@ -181,20 +185,9 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
     );
   }
 
-  void _handleRadioValueChanged(int value, String text) {
-    double result = 0;
-
-    switch (value) {
-      case 0:
-        result = _calculateWeight(_weightController.text, 0.06);
-        break;
-      case 1:
-        result = _calculateWeight(_weightController.text, 0.38);
-        break;
-      case 2:
-        result = _calculateWeight(_weightController.text, 0.91);
-        break;
-    }
+  void _handleRadioValueChanged(
+      int radioValue, String text, double weightValue) {
+    final double result = _calculateWeight(_weightController.text, weightValue);
 
     if (_animationController.status == AnimationStatus.completed) {
       _animationController.reverse();
@@ -203,7 +196,8 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
     Future<void>.delayed(Duration(milliseconds: 500), () {
       if (result != 0) {
         setState(() {
-          _radioValue = value;
+          _currentIndex = radioValue;
+          _radioValue = radioValue;
           _formattedText = 'Your weight in $text is '
               '${result.toStringAsFixed(1)} lbs';
         });

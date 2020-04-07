@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weight_planet_calculator/ui/home.dart';
+import 'package:weight_planet_calculator/ui/home.ui.dart';
 
 void main() => runApp(MyApp());
 
