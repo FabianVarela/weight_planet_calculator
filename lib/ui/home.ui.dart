@@ -10,6 +10,8 @@ class Home extends StatefulWidget {
 
 class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   final TextEditingController _weightController = TextEditingController();
+  final double _poundValue = 2.20462;
+  final String _poundUnit = 'Kg';
 
   int _radioValue = 0;
   String _formattedText = '';
@@ -114,6 +116,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
           Padding(
             padding: EdgeInsets.only(bottom: 5),
             child: Wrap(
+              alignment: WrapAlignment.center,
               children: <Widget>[
                 for (int i = 0; i < planets.length; i++)
                   _setRadioButton(planets[i].name, i, planets[i].weightGravity,
@@ -133,7 +136,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
         labelText: 'Your weight on earth',
-        hintText: 'In pounds',
+        hintText: 'In $_poundUnit',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -199,7 +202,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
           _currentIndex = radioValue;
           _radioValue = radioValue;
           _formattedText = 'Your weight in $text is '
-              '${result.toStringAsFixed(1)} lbs';
+              '${result.toStringAsFixed(1)} $_poundUnit';
         });
       }
 
@@ -211,7 +214,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return weight.isNotEmpty &&
             int.parse(weight).toString().isNotEmpty &&
             int.parse(weight) > 0
-        ? int.parse(weight) * multiplier
+        ? ((int.parse(weight) * _poundValue) * multiplier) / _poundValue
         : 0;
   }
 }
