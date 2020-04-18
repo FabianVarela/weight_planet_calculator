@@ -58,31 +58,34 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   Widget _setHeader() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.34,
+      height: MediaQuery.of(context).size.height * 0.4,
       child: Stack(
         children: <Widget>[
           ClipPath(
             clipper: HeaderClipPath(),
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.3,
+              height: MediaQuery.of(context).size.height * 0.34,
               width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.symmetric(horizontal: 12),
               decoration: BoxDecoration(color: Theme.of(context).primaryColor),
               child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Weight Planet Calculator',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).backgroundColor,
+                alignment: Alignment.topCenter,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 100),
+                  child: Text(
+                    'Weight Planet Calculator',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                      color: Theme.of(context).backgroundColor,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.19,
+            top: MediaQuery.of(context).size.height * 0.24,
             child: Container(
               width: MediaQuery.of(context).size.width,
               child: RotationListAnimation(
@@ -134,11 +137,19 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       controller: _weightController,
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.done,
+      style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w400,
+      ),
       decoration: InputDecoration(
         labelText: 'Your weight on earth',
         hintText: 'In $_poundUnit',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
+        ),
+        labelStyle: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w300,
         ),
         prefixIcon: Icon(Icons.person_outline),
       ),
@@ -163,7 +174,11 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
             padding: EdgeInsets.only(right: 5),
             child: Text(
               title,
-              style: TextStyle(color: Colors.black38),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w300,
+                color: Theme.of(context).primaryColor,
+              ),
             ),
           ),
         ),
@@ -180,9 +195,9 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
             ? 'Please enter the value'
             : _formattedText,
         style: TextStyle(
-          color: Colors.black38,
           fontSize: 20,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w700,
+          color: Theme.of(context).primaryColor,
         ),
       ),
     );
