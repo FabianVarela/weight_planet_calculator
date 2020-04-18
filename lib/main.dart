@@ -9,6 +9,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Weight Planet Calculator',
       theme: ThemeData(
+        fontFamily: 'Barlow',
         primaryColor: Colors.blueGrey,
         backgroundColor: Colors.white,
       ),
