@@ -144,7 +144,10 @@ class RotationItem extends StatelessWidget {
               width: _diameter * _constDiameter,
               height: _diameter * _constDiameter,
               decoration: BoxDecoration(
-                image: DecorationImage(image: AssetImage(asset)),
+                image: DecorationImage(
+                  image: AssetImage(asset),
+                  fit: BoxFit.contain,
+                ),
                 shape: BoxShape.circle,
               ),
             ),
