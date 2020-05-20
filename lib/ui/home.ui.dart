@@ -226,10 +226,10 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   double _calculateWeight(String weight, double multiplier) {
-    return weight.isNotEmpty &&
-            int.parse(weight).toString().isNotEmpty &&
-            int.parse(weight) > 0
-        ? ((int.parse(weight) * _poundValue) * multiplier) / _poundValue
+    final double weightValue = double.tryParse(weight);
+
+    return weightValue != null && weightValue > 0
+        ? ((double.parse(weight) * _poundValue) * multiplier) / _poundValue
         : 0;
   }
 }
