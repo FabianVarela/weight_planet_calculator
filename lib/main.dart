@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:weight_planet_calculator/ui/home.ui.dart';
 
 Future<void> main() async {
@@ -22,7 +23,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Weight Planet Calculator',
       theme: ThemeData(
-        fontFamily: 'Barlow',
+        textTheme: GoogleFonts.barlowTextTheme(Theme.of(context).textTheme),
         primaryColor: Colors.blueGrey,
         backgroundColor: Colors.white,
       ),
