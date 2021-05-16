@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 class HeaderClipPath extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    final Path path = Path();
+    final path = Path();
 
     path.lineTo(0, size.height - 50);
     path.quadraticBezierTo(
