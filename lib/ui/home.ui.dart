@@ -10,14 +10,15 @@ class Home extends StatefulWidget {
 
 class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   final TextEditingController _weightController = TextEditingController();
+
   final double _poundValue = 2.20462;
   final String _poundUnit = 'Kg';
 
   int _radioValue = 0;
   String _formattedText = '';
 
-  AnimationController _animationController;
-  Animation<double> _animation;
+  late AnimationController _animationController;
+  late Animation<double> _animation;
 
   int _currentIndex = 0;
 
@@ -165,7 +166,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
           activeColor: color,
           value: radioValue,
           groupValue: _radioValue,
-          onChanged: (int value) =>
+          onChanged: (_) =>
               _handleRadioValueChanged(radioValue, title, weightValue),
         ),
         GestureDetector(
@@ -203,9 +204,8 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  void _handleRadioValueChanged(
-      int radioValue, String text, double weightValue) {
-    final double result = _calculateWeight(_weightController.text, weightValue);
+  void _handleRadioValueChanged(int radio, String text, double weight) {
+    final result = _calculateWeight(_weightController.text, weight);
 
     if (_animationController.status == AnimationStatus.completed) {
       _animationController.reverse();
@@ -214,8 +214,8 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     Future<void>.delayed(Duration(milliseconds: 500), () {
       if (result != 0) {
         setState(() {
-          _currentIndex = radioValue;
-          _radioValue = radioValue;
+          _currentIndex = radio;
+          _radioValue = radio;
           _formattedText = 'Your weight in $text is '
               '${result.toStringAsFixed(1)} $_poundUnit';
         });
@@ -226,7 +226,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   double _calculateWeight(String weight, double multiplier) {
-    final double weightValue = double.tryParse(weight);
+    final weightValue = double.tryParse(weight);
 
     return weightValue != null && weightValue > 0
         ? ((double.parse(weight) * _poundValue) * multiplier) / _poundValue

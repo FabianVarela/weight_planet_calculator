@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 class RotationListAnimation extends StatefulWidget {
   RotationListAnimation({
-    @required this.size,
-    this.assetList,
-    this.currentIndex,
+    required this.size,
+    required this.assetList,
+    this.currentIndex = 0,
     this.isReverse = true,
   });
 
@@ -23,8 +23,8 @@ class _RotationListAnimationState extends State<RotationListAnimation>
     with SingleTickerProviderStateMixin {
   double get _widgetHeight => widget.size.height * 0.8; // original 0.4
 
-  AnimationController _controller;
-  Tween<double> _rotationTween;
+  late AnimationController _controller;
+  late Tween<double> _rotationTween;
 
   @override
   void initState() {
@@ -65,18 +65,18 @@ class _RotationListAnimationState extends State<RotationListAnimation>
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> stackChildren = <Widget>[_setCircle()];
+    final stackChildren = <Widget>[_setCircle()];
 
-    for (int i = 0; i < widget.assetList.length; i++) {
-      final double radialOffset = _widgetHeight / 2;
-      final double radianDiff = (2 * pi) / widget.assetList.length;
-      final double rotationFactor = _rotationTween.animate(_controller).value;
-      final double startRadian = -pi / 2 + -rotationFactor * radianDiff;
-      final double radians = startRadian + i * radianDiff;
+    for (var i = 0; i < widget.assetList.length; i++) {
+      final radialOffset = _widgetHeight / 2;
+      final radianDiff = (2 * pi) / widget.assetList.length;
+      final rotationFactor = _rotationTween.animate(_controller).value;
+      final startRadian = -pi / 2 + -rotationFactor * radianDiff;
+      final radians = startRadian + i * radianDiff;
 
-      final double reverseValue = widget.isReverse ? -1 : 1; // original 1
-      final double dx = radialOffset * (reverseValue * cos(radians));
-      final double dy = radialOffset * (reverseValue * sin(radians));
+      final reverseValue = widget.isReverse ? -1 : 1; // original 1
+      final dx = radialOffset * (reverseValue * cos(radians));
+      final dy = radialOffset * (reverseValue * sin(radians));
 
       stackChildren.add(
         Transform.translate(
@@ -124,7 +124,7 @@ class _RotationListAnimationState extends State<RotationListAnimation>
 }
 
 class RotationItem extends StatelessWidget {
-  RotationItem({@required this.asset});
+  RotationItem({required this.asset});
 
   final String asset;
 
@@ -137,7 +137,7 @@ class RotationItem extends StatelessWidget {
       width: 120,
       height: 120,
       child: Stack(
-        overflow: Overflow.visible,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
         children: <Widget>[
           Center(
             child: Container(
