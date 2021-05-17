@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weight_planet_calculator/model/planet.model.dart';
-import 'package:weight_planet_calculator/ui/custom_clippath.dart';
+import 'package:weight_planet_calculator/ui/widgets/custom_clippath.dart';
 import 'package:weight_planet_calculator/ui/rotation_list_animation.dart';
 
 class Home extends StatefulWidget {
