@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:weight_planet_calculator/model/planet.model.dart';
 import 'package:weight_planet_calculator/ui/widgets/custom_clippath.dart';
-import 'package:weight_planet_calculator/ui/rotation_list_animation.dart';
+import 'package:weight_planet_calculator/ui/widgets/custom_radio_button.dart';
+import 'package:weight_planet_calculator/ui/widgets/custom_text_field.dart';
+import 'package:weight_planet_calculator/ui/widgets/rotation_list_animation.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -9,18 +11,17 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  final TextEditingController _weightController = TextEditingController();
+  static const double _poundValue = 2.20462;
+  static const String _poundUnit = 'Kg';
 
-  final double _poundValue = 2.20462;
-  final String _poundUnit = 'Kg';
+  final TextEditingController _weightController = TextEditingController();
 
   int _radioValue = 0;
   String _formattedText = '';
+  int _currentIndex = 0;
 
   late AnimationController _animationController;
   late Animation<double> _animation;
-
-  int _currentIndex = 0;
 
   @override
   void initState() {
@@ -48,16 +49,99 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            _setHeader(),
-            SizedBox(height: 25),
-            _setContainer(),
+            _Header(index: _currentIndex),
+            const SizedBox(height: 25),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.5,
+              alignment: Alignment.topCenter,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: <Widget>[
+                  CustomTextField(
+                    controller: _weightController,
+                    label: 'Your weight on earth',
+                    hint: 'In $_poundUnit',
+                  ),
+                  const SizedBox(height: 20),
+                  ScaleTransition(
+                    scale: _animation,
+                    alignment: Alignment.center,
+                    child: Text(
+                      _formattedText,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Wrap(
+                    alignment: WrapAlignment.center,
+                    children: <Widget>[
+                      for (int i = 0; i < planets.length; i++)
+                        CustomRadioButton(
+                          title: planets[i].name,
+                          value: i,
+                          groupValue: _radioValue,
+                          weight: planets[i].weightGravity,
+                          color: planets[i].color,
+                          onChanged: (value) => _onChangeRadioValue(value!,
+                              planets[i].name, planets[i].weightGravity),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                ],
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _setHeader() {
+  void _onChangeRadioValue(int radio, String text, double weight) {
+    final result = _calculateWeight(_weightController.text, weight);
+
+    if (_animationController.status == AnimationStatus.completed) {
+      _animationController.reverse();
+    }
+
+    Future<void>.delayed(Duration(milliseconds: 500), () {
+      if (result != 0) {
+        final resultFix = result.toStringAsFixed(1);
+        setState(() {
+          _currentIndex = radio;
+          _radioValue = radio;
+          _formattedText = 'Your weight in $text is $resultFix $_poundUnit';
+        });
+      } else {
+        setState(() {
+          _formattedText = 'Please enter the value';
+        });
+      }
+
+      _animationController.forward();
+    });
+  }
+
+  double _calculateWeight(String weight, double multiplier) {
+    final weightValue = double.tryParse(weight);
+
+    return weightValue != null && weightValue > 0
+        ? ((double.parse(weight) * _poundValue) * multiplier) / _poundValue
+        : 0;
+  }
+}
+
+class _Header extends StatelessWidget {
+  const _Header({Key? key, required this.index}) : super(key: key);
+
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.4,
       child: Stack(
@@ -93,143 +177,12 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 size: MediaQuery.of(context).size,
                 isReverse: true,
                 assetList: planets.map((Planet p) => p.asset).toList(),
-                currentIndex: _currentIndex,
+                currentIndex: index,
               ),
             ),
           ),
         ],
       ),
     );
-  }
-
-  Widget _setContainer() {
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      alignment: Alignment.topCenter,
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 20),
-            child: _setTextField(),
-          ),
-          Padding(
-            padding: EdgeInsets.only(bottom: 20),
-            child: _setAnimationText(),
-          ),
-          Padding(
-            padding: EdgeInsets.only(bottom: 5),
-            child: Wrap(
-              alignment: WrapAlignment.center,
-              children: <Widget>[
-                for (int i = 0; i < planets.length; i++)
-                  _setRadioButton(planets[i].name, i, planets[i].weightGravity,
-                      planets[i].color)
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _setTextField() {
-    return TextField(
-      controller: _weightController,
-      keyboardType: TextInputType.number,
-      textInputAction: TextInputAction.done,
-      style: TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.w400,
-      ),
-      decoration: InputDecoration(
-        labelText: 'Your weight on earth',
-        hintText: 'In $_poundUnit',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        labelStyle: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w300,
-        ),
-        prefixIcon: Icon(Icons.person_outline),
-      ),
-    );
-  }
-
-  Widget _setRadioButton(
-      String title, int radioValue, double weightValue, Color color) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Radio<int>(
-          activeColor: color,
-          value: radioValue,
-          groupValue: _radioValue,
-          onChanged: (_) =>
-              _handleRadioValueChanged(radioValue, title, weightValue),
-        ),
-        GestureDetector(
-          onTap: () => _handleRadioValueChanged(radioValue, title, weightValue),
-          child: Padding(
-            padding: EdgeInsets.only(right: 5),
-            child: Text(
-              title,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w300,
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _setAnimationText() {
-    return ScaleTransition(
-      scale: _animation,
-      alignment: Alignment.center,
-      child: Text(
-        _weightController.text.isEmpty
-            ? 'Please enter the value'
-            : _formattedText,
-        style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w700,
-          color: Theme.of(context).primaryColor,
-        ),
-      ),
-    );
-  }
-
-  void _handleRadioValueChanged(int radio, String text, double weight) {
-    final result = _calculateWeight(_weightController.text, weight);
-
-    if (_animationController.status == AnimationStatus.completed) {
-      _animationController.reverse();
-    }
-
-    Future<void>.delayed(Duration(milliseconds: 500), () {
-      if (result != 0) {
-        setState(() {
-          _currentIndex = radio;
-          _radioValue = radio;
-          _formattedText = 'Your weight in $text is '
-              '${result.toStringAsFixed(1)} $_poundUnit';
-        });
-      }
-
-      _animationController.forward();
-    });
-  }
-
-  double _calculateWeight(String weight, double multiplier) {
-    final weightValue = double.tryParse(weight);
-
-    return weightValue != null && weightValue > 0
-        ? ((double.parse(weight) * _poundValue) * multiplier) / _poundValue
-        : 0;
   }
 }
