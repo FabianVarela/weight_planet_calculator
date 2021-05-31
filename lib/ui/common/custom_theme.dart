@@ -13,6 +13,9 @@ class CustomTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         labelStyle: TextStyle(color: CustomColors.blueGrey),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: CustomColors.blueGrey),
           borderRadius: BorderRadius.circular(10),
