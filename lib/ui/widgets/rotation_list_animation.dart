@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:weight_planet_calculator/ui/widgets/rotation_item.dart';
 
 class RotationListAnimation extends StatefulWidget {
   RotationListAnimation({
@@ -21,7 +22,7 @@ class RotationListAnimation extends StatefulWidget {
 
 class _RotationListAnimationState extends State<RotationListAnimation>
     with SingleTickerProviderStateMixin {
-  double get _widgetHeight => widget.size.height * 0.8; // original 0.4
+  double get _myHeight => widget.size.height * 0.8; // 0.4
 
   late AnimationController _controller;
   late Tween<double> _rotationTween;
@@ -50,7 +51,6 @@ class _RotationListAnimationState extends State<RotationListAnimation>
         begin: _rotationTween.evaluate(_controller),
         end: widget.currentIndex.toDouble(),
       );
-
       _controller.forward(from: 0.0);
     }
 
@@ -65,10 +65,10 @@ class _RotationListAnimationState extends State<RotationListAnimation>
 
   @override
   Widget build(BuildContext context) {
-    final stackChildren = <Widget>[_setCircle()];
+    final stackChildren = <Widget>[_Circle(height: _myHeight)];
 
     for (var i = 0; i < widget.assetList.length; i++) {
-      final radialOffset = _widgetHeight / 2;
+      final radialOffset = _myHeight / 2;
       final radianDiff = (2 * pi) / widget.assetList.length;
       final rotationFactor = _rotationTween.animate(_controller).value;
       final startRadian = -pi / 2 + -rotationFactor * radianDiff;
@@ -81,79 +81,37 @@ class _RotationListAnimationState extends State<RotationListAnimation>
       stackChildren.add(
         Transform.translate(
           offset: Offset(dx, dy),
-          child: RotationItem(
-            asset: widget.assetList[i],
-          ),
+          child: RotationItem(asset: widget.assetList[i]),
         ),
       );
     }
 
-    return Container(
-      child: FractionalTranslation(
-        translation: Offset(
-          0.0,
-          widget.isReverse ? -0.9 : 0.9, // original 0.2
-        ),
-        child: Align(
-          alignment:
-              widget.isReverse ? Alignment.topCenter : Alignment.bottomCenter,
-          child: Container(
-            height: _widgetHeight,
-            child: Stack(
-              alignment: Alignment.center,
-              children: stackChildren,
-            ),
-          ),
+    return FractionalTranslation(
+      translation: Offset(0.0, widget.isReverse ? -0.9 : 0.9), // 0.2
+      child: Align(
+        alignment:
+            widget.isReverse ? Alignment.topCenter : Alignment.bottomCenter,
+        child: Container(
+          height: _myHeight,
+          child: Stack(alignment: Alignment.center, children: stackChildren),
         ),
       ),
-    );
-  }
-
-  Widget _setCircle() {
-    return Container(
-      width: _widgetHeight,
-      height: _widgetHeight,
-      alignment: Alignment.topCenter,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        // border: Border.all(color: Colors.grey.shade300, width: 1.5),
-      ),
-      child: Container(),
     );
   }
 }
 
-class RotationItem extends StatelessWidget {
-  RotationItem({required this.asset});
+class _Circle extends StatelessWidget {
+  const _Circle({Key? key, required this.height}) : super(key: key);
 
-  final String asset;
-
-  final double _diameter = 5; // original 2
-  final double _constDiameter = 25;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 120,
-      height: 120,
-      child: Stack(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        children: <Widget>[
-          Center(
-            child: Container(
-              width: _diameter * _constDiameter,
-              height: _diameter * _constDiameter,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(asset),
-                  fit: BoxFit.contain,
-                ),
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
-        ],
-      ),
+      width: height,
+      height: height,
+      alignment: Alignment.topCenter,
+      decoration: BoxDecoration(shape: BoxShape.circle),
     );
   }
 }
