@@ -33,14 +33,16 @@ class RotationListAnimation extends HookWidget {
 
     final stackChildren = <Widget>[_Circle(height: _myHeight)];
 
-    for (var i = 0; i < assetList.length; i++) {
-      final radialOffset = _myHeight / 2;
-      final radianDiff = (2 * pi) / assetList.length;
-      final rotationFactor = tween.animate(animationController).value;
-      final startRadian = -pi / 2 + -rotationFactor * radianDiff;
-      final radians = startRadian + i * radianDiff;
+    final radialOffset = _myHeight / 2;
+    final radianDiff = (2 * pi) / assetList.length;
 
-      final reverseValue = isReverse ? -1 : 1; // original 1
+    final rotationFactor = tween.animate(animationController).value;
+    final startRadian = -pi / 2 + -rotationFactor * radianDiff;
+
+    final reverseValue = isReverse ? -1 : 1; // original 1
+
+    for (var i = 0; i < assetList.length; i++) {
+      final radians = startRadian + i * radianDiff;
       final dx = radialOffset * (reverseValue * cos(radians));
       final dy = radialOffset * (reverseValue * sin(radians));
 
