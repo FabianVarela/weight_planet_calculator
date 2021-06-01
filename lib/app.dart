@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weight_planet_calculator/ui/common/custom_theme.dart';
-import 'package:weight_planet_calculator/ui/home.ui.dart';
+import 'package:weight_planet_calculator/ui/home_view.dart';
 
 class App extends StatelessWidget {
   @override
@@ -8,7 +8,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Weight Planet Calculator',
       theme: CustomTheme.mainTheme(context),
-      home: Home(),
+      home: HomeView(),
     );
   }
 }
