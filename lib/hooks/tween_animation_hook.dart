@@ -20,7 +20,7 @@ class _HookTweenAnimationState
   void initHook() {
     super.initHook();
 
-    hook.animationController.addListener(() => setState(() {}));
+    hook.animationController.addListener(_changeState);
     _tweenAnimation = Tween<double>(begin: hook.begin, end: hook.end);
     hook.animationController.forward();
   }
@@ -39,6 +39,8 @@ class _HookTweenAnimationState
 
   @override
   Tween<double> build(BuildContext context) => _tweenAnimation;
+
+  void _changeState() => setState(() {});
 }
 
 Tween<double> useTweenAnimation(AnimationController controller,
