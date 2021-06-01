@@ -15,6 +15,7 @@ class HomeView extends HookWidget {
   Widget build(BuildContext context) {
     final formattedText = useState('');
     final currentIndex = useState(0);
+    final groupValue = useState(0);
 
     final textController = useTextEditingController();
 
@@ -54,6 +55,7 @@ class HomeView extends HookWidget {
                   const SizedBox(height: 20),
                   _PlanetList(
                     planets: planets,
+                    groupValue: groupValue.value,
                     onChange: (radio, text, weight) {
                       final res = _calculateWeight(textController.text, weight);
 
@@ -62,7 +64,10 @@ class HomeView extends HookWidget {
                       }
 
                       Future.delayed(Duration(milliseconds: 500), () {
-                        if (res != 0) currentIndex.value = radio;
+                        if (res != 0) {
+                          groupValue.value = radio;
+                          currentIndex.value = radio;
+                        }
                         formattedText.value = _textResult(res, text);
                         animController.forward();
                       });
@@ -148,16 +153,19 @@ class _Header extends StatelessWidget {
 }
 
 class _PlanetList extends HookWidget {
-  const _PlanetList({Key? key, required this.planets, required this.onChange})
-      : super(key: key);
+  const _PlanetList({
+    Key? key,
+    required this.planets,
+    this.groupValue = 0,
+    this.onChange,
+  }) : super(key: key);
 
   final List<Planet> planets;
-  final Function(int, String, double) onChange;
+  final int groupValue;
+  final Function(int, String, double)? onChange;
 
   @override
   Widget build(BuildContext context) {
-    final radioValue = useState(0);
-
     return Wrap(
       alignment: WrapAlignment.center,
       children: <Widget>[
@@ -165,13 +173,16 @@ class _PlanetList extends HookWidget {
           CustomRadioButton(
             title: planets[i].name,
             value: i,
-            groupValue: radioValue.value,
+            groupValue: groupValue,
             weight: planets[i].weightGravity,
             color: planets[i].color,
-            onChanged: (value) {
-              radioValue.value = value!;
-              onChange(value, planets[i].name, planets[i].weightGravity);
-            },
+            onChanged: onChange != null
+                ? (val) => onChange!(
+                      val!,
+                      planets[i].name,
+                      planets[i].weightGravity,
+                    )
+                : null,
           ),
       ],
     );
