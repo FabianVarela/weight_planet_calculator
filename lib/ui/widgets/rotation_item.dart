@@ -13,23 +13,18 @@ class RotationItem extends StatelessWidget {
     return Container(
       width: 120,
       height: 120,
-      child: Stack(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        children: <Widget>[
-          Center(
-            child: Container(
-              width: _diameter * _constDiameter,
-              height: _diameter * _constDiameter,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(asset),
-                  fit: BoxFit.contain,
-                ),
-                shape: BoxShape.circle,
-              ),
+      child: Center(
+        child: Container(
+          width: _diameter * _constDiameter,
+          height: _diameter * _constDiameter,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(asset),
+              fit: BoxFit.contain,
             ),
+            shape: BoxShape.circle,
           ),
-        ],
+        ),
       ),
     );
   }
