@@ -20,7 +20,7 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.done,
-      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,

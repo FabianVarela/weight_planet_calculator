@@ -6,12 +6,13 @@ import 'package:weight_planet_calculator/hooks/tween_animation_hook.dart';
 import 'package:weight_planet_calculator/ui/widgets/rotation_item.dart';
 
 class RotationListAnimation extends HookWidget {
-  RotationListAnimation({
+  const RotationListAnimation({
+    Key? key,
     required this.size,
     required this.assetList,
     this.currentIndex = 0,
     this.isReverse = true,
-  });
+  }) : super(key: key);
 
   final Size size;
   final List<String> assetList;
@@ -23,7 +24,7 @@ class RotationListAnimation extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final animationController = useAnimationController(
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
     );
     final tween = useTweenAnimation(
       animationController,
@@ -58,7 +59,7 @@ class RotationListAnimation extends HookWidget {
       translation: Offset(0.0, isReverse ? -0.9 : 0.9), // 0.2
       child: Align(
         alignment: isReverse ? Alignment.topCenter : Alignment.bottomCenter,
-        child: Container(
+        child: SizedBox(
           height: _myHeight,
           child: Stack(alignment: Alignment.center, children: stackChildren),
         ),
@@ -78,7 +79,7 @@ class _Circle extends StatelessWidget {
       width: height,
       height: height,
       alignment: Alignment.topCenter,
-      decoration: BoxDecoration(shape: BoxShape.circle),
+      decoration: const BoxDecoration(shape: BoxShape.circle),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RotationItem extends StatelessWidget {
-  RotationItem({required this.asset});
+  const RotationItem({Key? key, required this.asset}) : super(key: key);
 
   final String asset;
 
@@ -10,7 +10,7 @@ class RotationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 120,
       height: 120,
       child: Center(
