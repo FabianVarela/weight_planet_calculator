@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:weight_planet_calculator/hooks/curved_animation_hook.dart';
-import 'package:weight_planet_calculator/model/planet.model.dart';
+import 'package:weight_planet_calculator/model/planet_model.dart';
 import 'package:weight_planet_calculator/ui/widgets/custom_clippath.dart';
 import 'package:weight_planet_calculator/ui/widgets/custom_radio_button.dart';
 import 'package:weight_planet_calculator/ui/widgets/custom_text_field.dart';
 import 'package:weight_planet_calculator/ui/widgets/rotation_list_animation.dart';
 
 class HomeView extends HookWidget {
+  const HomeView({Key? key}) : super(key: key);
+
   static const double _poundValue = 2.20462;
   static const String _poundUnit = 'Kg';
 
@@ -21,7 +23,7 @@ class HomeView extends HookWidget {
 
     final animController = useAnimationController(
       initialValue: 0.1,
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
     );
     final animation = useCurvedAnimation(animController);
 
@@ -63,7 +65,7 @@ class HomeView extends HookWidget {
                         animController.reverse();
                       }
 
-                      Future.delayed(Duration(milliseconds: 500), () {
+                      Future.delayed(const Duration(milliseconds: 500), () {
                         if (res != 0) {
                           groupValue.value = radio;
                           currentIndex.value = radio;
@@ -107,7 +109,7 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height * 0.4,
       child: Stack(
         children: <Widget>[
@@ -116,12 +118,12 @@ class _Header extends StatelessWidget {
             child: Container(
               height: MediaQuery.of(context).size.height * 0.34,
               width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.symmetric(horizontal: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               decoration: BoxDecoration(color: Theme.of(context).primaryColor),
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: EdgeInsets.only(top: 100),
+                  padding: const EdgeInsets.only(top: 100),
                   child: Text(
                     'Weight Planet Calculator',
                     style: TextStyle(
@@ -136,7 +138,7 @@ class _Header extends StatelessWidget {
           ),
           Positioned(
             top: MediaQuery.of(context).size.height * 0.24,
-            child: Container(
+            child: SizedBox(
               width: MediaQuery.of(context).size.width,
               child: RotationListAnimation(
                 size: MediaQuery.of(context).size,
