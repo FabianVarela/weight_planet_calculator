@@ -7,12 +7,12 @@ import 'package:weight_planet_calculator/ui/widgets/rotation_item.dart';
 
 class RotationListAnimation extends HookWidget {
   const RotationListAnimation({
-    Key? key,
     required this.size,
     required this.assetList,
     this.currentIndex = 0,
     this.isReverse = true,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Size size;
   final List<String> assetList;
@@ -28,7 +28,7 @@ class RotationListAnimation extends HookWidget {
     );
     final tween = useTweenAnimation(
       animationController,
-      begin: 0.0,
+      begin: 0,
       end: currentIndex.toDouble(),
     );
 
@@ -56,7 +56,7 @@ class RotationListAnimation extends HookWidget {
     }
 
     return FractionalTranslation(
-      translation: Offset(0.0, isReverse ? -0.9 : 0.9), // 0.2
+      translation: Offset(0, isReverse ? -0.9 : 0.9), // 0.2
       child: Align(
         alignment: isReverse ? Alignment.topCenter : Alignment.bottomCenter,
         child: SizedBox(
@@ -69,7 +69,7 @@ class RotationListAnimation extends HookWidget {
 }
 
 class _Circle extends StatelessWidget {
-  const _Circle({Key? key, required this.height}) : super(key: key);
+  const _Circle({required this.height});
 
   final double? height;
 

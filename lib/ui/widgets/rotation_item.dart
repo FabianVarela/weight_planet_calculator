@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
 class RotationItem extends StatelessWidget {
-  const RotationItem({Key? key, required this.asset}) : super(key: key);
+  const RotationItem({required this.asset, super.key});
 
   final String asset;
 
-  final double _diameter = 5; // original 2
-  final double _constDiameter = 25;
+  static const double _diameter = 5; // original 2
+  static const int _constDiameter = 25;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 120,
-      height: 120,
+    return SizedBox.fromSize(
+      size: const Size(120, 120),
       child: Center(
         child: Container(
           width: _diameter * _constDiameter,

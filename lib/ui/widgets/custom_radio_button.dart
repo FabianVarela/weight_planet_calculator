@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 
 class CustomRadioButton extends StatelessWidget {
   const CustomRadioButton({
-    Key? key,
     required this.title,
     required this.value,
     required this.groupValue,
     required this.weight,
     required this.color,
     this.onChanged,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
   final int value;
   final int groupValue;
   final double weight;
   final Color color;
-  final Function(int?)? onChanged;
+  final ValueSetter<int?>? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +27,10 @@ class CustomRadioButton extends StatelessWidget {
           activeColor: color,
           value: value,
           groupValue: groupValue,
-          onChanged: onChanged != null ? (_) => onChanged!(value) : null,
+          onChanged: (_) => onChanged?.call(value),
         ),
         GestureDetector(
-          onTap: onChanged != null ? () => onChanged!(value) : null,
+          onTap: () => onChanged?.call(value),
           child: Padding(
             padding: const EdgeInsets.only(right: 5),
             child: Text(

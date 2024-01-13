@@ -32,7 +32,7 @@ class _HookTweenAnimationState
         begin: _tweenAnimation.evaluate(hook.animationController),
         end: hook.end,
       );
-      hook.animationController.forward(from: 0.0);
+      hook.animationController.forward(from: 0);
     }
     super.didUpdateHook(oldHook);
   }
@@ -43,7 +43,10 @@ class _HookTweenAnimationState
   void _changeState() => setState(() {});
 }
 
-Tween<double> useTweenAnimation(AnimationController controller,
-    {double? begin, double? end}) {
+Tween<double> useTweenAnimation(
+  AnimationController controller, {
+  double? begin,
+  double? end,
+}) {
   return use(_HookTweenAnimation(controller, begin, end));
 }

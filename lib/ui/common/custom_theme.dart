@@ -4,10 +4,9 @@ import 'package:weight_planet_calculator/ui/common/custom_colors.dart';
 
 class CustomTheme {
   static ThemeData mainTheme(BuildContext context) {
-    return ThemeData(
+    final themeData = ThemeData(
       textTheme: GoogleFonts.barlowTextTheme(Theme.of(context).textTheme),
       primaryColor: CustomColors.blueGrey,
-      backgroundColor: CustomColors.white,
       textSelectionTheme: TextSelectionThemeData(
         cursorColor: CustomColors.blueGrey,
       ),
@@ -22,6 +21,12 @@ class CustomTheme {
         ),
       ),
       iconTheme: IconThemeData(color: CustomColors.blueGrey),
+    );
+
+    return themeData.copyWith(
+      colorScheme: themeData.colorScheme.copyWith(
+        background: CustomColors.white,
+      ),
     );
   }
 }

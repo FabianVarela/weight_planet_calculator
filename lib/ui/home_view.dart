@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:weight_planet_calculator/hooks/curved_animation_hook.dart';
@@ -8,7 +9,7 @@ import 'package:weight_planet_calculator/ui/widgets/custom_text_field.dart';
 import 'package:weight_planet_calculator/ui/widgets/rotation_list_animation.dart';
 
 class HomeView extends HookWidget {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView({super.key});
 
   static const double _poundValue = 2.20462;
   static const String _poundUnit = 'Kg';
@@ -44,7 +45,6 @@ class HomeView extends HookWidget {
                   const SizedBox(height: 20),
                   ScaleTransition(
                     scale: animation,
-                    alignment: Alignment.center,
                     child: Text(
                       formattedText.value,
                       style: TextStyle(
@@ -103,7 +103,7 @@ class HomeView extends HookWidget {
 }
 
 class _Header extends StatelessWidget {
-  const _Header({Key? key, required this.index}) : super(key: key);
+  const _Header({required this.index});
 
   final int index;
 
@@ -129,7 +129,7 @@ class _Header extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).colorScheme.background,
                     ),
                   ),
                 ),
@@ -142,7 +142,6 @@ class _Header extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: RotationListAnimation(
                 size: MediaQuery.of(context).size,
-                isReverse: true,
                 assetList: planets.map((Planet p) => p.asset).toList(),
                 currentIndex: index,
               ),
@@ -154,39 +153,36 @@ class _Header extends StatelessWidget {
   }
 }
 
+typedef OnChangeList = void Function(int, String, double);
+
 class _PlanetList extends HookWidget {
   const _PlanetList({
-    Key? key,
     required this.planets,
     this.groupValue = 0,
     this.onChange,
-  }) : super(key: key);
+  });
 
   final List<Planet> planets;
   final int groupValue;
-  final Function(int, String, double)? onChange;
+  final OnChangeList? onChange;
 
   @override
   Widget build(BuildContext context) {
     return Wrap(
       alignment: WrapAlignment.center,
-      children: <Widget>[
-        for (int i = 0; i < planets.length; i++)
-          CustomRadioButton(
-            title: planets[i].name,
-            value: i,
-            groupValue: groupValue,
-            weight: planets[i].weightGravity,
-            color: planets[i].color,
-            onChanged: onChange != null
-                ? (val) => onChange!(
-                      val!,
-                      planets[i].name,
-                      planets[i].weightGravity,
-                    )
-                : null,
-          ),
-      ],
+      children: planets.mapIndexed((index, item) {
+        final name = item.name;
+        final weightGravity = item.weightGravity;
+
+        return CustomRadioButton(
+          title: name,
+          value: index,
+          groupValue: groupValue,
+          weight: weightGravity,
+          color: item.color,
+          onChanged: (value) => onChange?.call(value!, name, weightGravity),
+        );
+      }).toList(),
     );
   }
 }
