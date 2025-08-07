@@ -1,32 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:weight_planet_calculator/ui/common/custom_colors.dart';
 
 class CustomTheme {
   static ThemeData mainTheme(BuildContext context) {
     final themeData = ThemeData(
       textTheme: GoogleFonts.barlowTextTheme(Theme.of(context).textTheme),
-      primaryColor: CustomColors.blueGrey,
-      textSelectionTheme: TextSelectionThemeData(
-        cursorColor: CustomColors.blueGrey,
+      primaryColor: Colors.blueGrey,
+      textSelectionTheme: const TextSelectionThemeData(
+        cursorColor: Colors.blueGrey,
       ),
       inputDecorationTheme: InputDecorationTheme(
-        labelStyle: TextStyle(color: CustomColors.blueGrey),
+        labelStyle: const TextStyle(color: Colors.blueGrey),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: CustomColors.blueGrey),
+          borderSide: const BorderSide(color: Colors.blueGrey),
           borderRadius: BorderRadius.circular(10),
         ),
       ),
-      iconTheme: IconThemeData(color: CustomColors.blueGrey),
+      iconTheme: const IconThemeData(color: Colors.blueGrey),
     );
 
     return themeData.copyWith(
-      colorScheme: themeData.colorScheme.copyWith(
-        background: CustomColors.white,
-      ),
+      colorScheme: themeData.colorScheme.copyWith(surface: Colors.white),
     );
   }
 }
