@@ -10,18 +10,18 @@ class RotationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.fromSize(
-      size: const Size(120, 120),
+    return SizedBox.square(
+      dimension: 120,
       child: Center(
-        child: Container(
-          width: _diameter * _constDiameter,
-          height: _diameter * _constDiameter,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(asset),
-              fit: BoxFit.contain,
+        child: SizedBox.square(
+          dimension: _diameter * _constDiameter,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(asset),
+                fit: BoxFit.contain,
+              ),
             ),
-            shape: BoxShape.circle,
           ),
         ),
       ),

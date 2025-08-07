@@ -21,6 +21,7 @@ class CustomRadioButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      spacing: 5,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Radio(
@@ -29,17 +30,14 @@ class CustomRadioButton extends StatelessWidget {
           groupValue: groupValue,
           onChanged: (_) => onChanged?.call(value),
         ),
-        GestureDetector(
+        InkWell(
           onTap: () => onChanged?.call(value),
-          child: Padding(
-            padding: const EdgeInsets.only(right: 5),
-            child: Text(
-              title,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w300,
-                color: Theme.of(context).primaryColor,
-              ),
+          child: Text(
+            title,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w300,
+              color: Theme.of(context).primaryColor,
             ),
           ),
         ),

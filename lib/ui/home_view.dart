@@ -31,18 +31,19 @@ class HomeView extends HookWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
+          spacing: 25,
           children: <Widget>[
             _Header(index: currentIndex.value),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 25),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
+                spacing: 20,
                 children: <Widget>[
                   CustomTextField(
                     controller: textController,
                     label: 'Your weight on earth',
                     hint: 'In $_poundUnit',
                   ),
-                  const SizedBox(height: 20),
                   ScaleTransition(
                     scale: animation,
                     child: Text(
@@ -54,7 +55,6 @@ class HomeView extends HookWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
                   _PlanetList(
                     planets: planets,
                     groupValue: groupValue.value,
@@ -109,15 +109,17 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.4,
+      height: size.height * .4,
       child: Stack(
         children: <Widget>[
           ClipPath(
             clipper: HeaderClipPath(),
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.34,
-              width: MediaQuery.of(context).size.width,
+              width: size.width,
+              height: size.height * .34,
               padding: const EdgeInsets.symmetric(horizontal: 12),
               decoration: BoxDecoration(color: Theme.of(context).primaryColor),
               child: Align(
@@ -129,7 +131,7 @@ class _Header extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.surface,
                     ),
                   ),
                 ),
@@ -137,12 +139,12 @@ class _Header extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.24,
+            top: size.height * .24,
             child: SizedBox(
-              width: MediaQuery.of(context).size.width,
+              width: size.width,
               child: RotationListAnimation(
-                size: MediaQuery.of(context).size,
-                assetList: planets.map((Planet p) => p.asset).toList(),
+                size: size,
+                assetList: planets.map((planet) => planet.asset).toList(),
                 currentIndex: index,
               ),
             ),

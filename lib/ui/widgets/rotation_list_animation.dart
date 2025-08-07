@@ -75,11 +75,11 @@ class _Circle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: height,
-      height: height,
-      alignment: Alignment.topCenter,
-      decoration: const BoxDecoration(shape: BoxShape.circle),
+    return SizedBox.square(
+      dimension: height,
+      child: const Center(
+        child: DecoratedBox(decoration: BoxDecoration(shape: BoxShape.circle)),
+      ),
     );
   }
 }
