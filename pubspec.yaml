@@ -4,14 +4,14 @@ description: Weight planet calculator
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.8.0 <4.0.0"
-  flutter: 3.32.0
+  sdk: ">=3.9.0 <4.0.0"
+  flutter: 3.35.0
 
 dependencies:
   collection: ^1.19.1
   flutter:
     sdk: flutter
-  flutter_hooks: ^0.21.2
+  flutter_hooks: ^0.21.3
   google_fonts: ^6.3.0
 
 dev_dependencies:
