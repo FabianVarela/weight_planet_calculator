@@ -18,15 +18,15 @@ class CustomTextField extends StatelessWidget {
 
     return TextField(
       controller: controller,
-      keyboardType: TextInputType.number,
-      textInputAction: TextInputAction.done,
-      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+      keyboardType: .number,
+      textInputAction: .done,
+      style: const TextStyle(fontSize: 18, fontWeight: .w400),
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,
         labelStyle: theme.inputDecorationTheme.labelStyle!.copyWith(
           fontSize: 16,
-          fontWeight: FontWeight.w300,
+          fontWeight: .w300,
         ),
         prefixIcon: Icon(Icons.person_outline, color: theme.iconTheme.color),
       ),

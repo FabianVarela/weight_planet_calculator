@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -22,7 +24,7 @@ class _HookTweenAnimationState
 
     hook.animationController.addListener(_changeState);
     _tweenAnimation = Tween<double>(begin: hook.begin, end: hook.end);
-    hook.animationController.forward();
+    unawaited(hook.animationController.forward());
   }
 
   @override
@@ -32,7 +34,7 @@ class _HookTweenAnimationState
         begin: _tweenAnimation.evaluate(hook.animationController),
         end: hook.end,
       );
-      hook.animationController.forward(from: 0);
+      unawaited(hook.animationController.forward(from: 0));
     }
     super.didUpdateHook(oldHook);
   }

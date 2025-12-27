@@ -11,12 +11,10 @@ class CustomTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         labelStyle: const TextStyle(color: Colors.blueGrey),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+        border: OutlineInputBorder(borderRadius: .circular(10)),
         focusedBorder: OutlineInputBorder(
+          borderRadius: .circular(10),
           borderSide: const BorderSide(color: Colors.blueGrey),
-          borderRadius: BorderRadius.circular(10),
         ),
       ),
       iconTheme: const IconThemeData(color: Colors.blueGrey),

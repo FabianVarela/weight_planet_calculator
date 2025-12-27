@@ -19,7 +19,7 @@ class RotationListAnimation extends HookWidget {
   final int currentIndex;
   final bool isReverse;
 
-  double get _myHeight => size.height * 0.8; // 0.4
+  double get _myHeight => size.height * .8; // .4
 
   @override
   Widget build(BuildContext context) {
@@ -56,12 +56,12 @@ class RotationListAnimation extends HookWidget {
     }
 
     return FractionalTranslation(
-      translation: Offset(0, isReverse ? -0.9 : 0.9), // 0.2
+      translation: Offset(0, isReverse ? -.9 : .9), // .2
       child: Align(
-        alignment: isReverse ? Alignment.topCenter : Alignment.bottomCenter,
+        alignment: isReverse ? .topCenter : .bottomCenter,
         child: SizedBox(
           height: _myHeight,
-          child: Stack(alignment: Alignment.center, children: stackChildren),
+          child: Stack(alignment: .center, children: stackChildren),
         ),
       ),
     );
@@ -78,7 +78,7 @@ class _Circle extends StatelessWidget {
     return SizedBox.square(
       dimension: height,
       child: const Center(
-        child: DecoratedBox(decoration: BoxDecoration(shape: BoxShape.circle)),
+        child: DecoratedBox(decoration: BoxDecoration(shape: .circle)),
       ),
     );
   }

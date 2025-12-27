@@ -17,10 +17,7 @@ class RotationItem extends StatelessWidget {
           dimension: _diameter * _constDiameter,
           child: DecoratedBox(
             decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(asset),
-                fit: BoxFit.contain,
-              ),
+              image: DecorationImage(image: AssetImage(asset), fit: .contain),
             ),
           ),
         ),
