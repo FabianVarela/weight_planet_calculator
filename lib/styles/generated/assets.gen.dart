@@ -9,35 +9,32 @@
 // ignore_for_file: type=lint
 // ignore_for_file: deprecated_member_use,directives_ordering,implicit_dynamic_list_literal,unnecessary_import
 
-class $AssetsImagesGen {
-  const $AssetsImagesGen();
+class $AssetsPlanetsGen {
+  const $AssetsPlanetsGen();
 
-  /// File path: assets/images/earth.png
-  String get earth => 'assets/images/earth.png';
+  /// File path: assets/planets/earth.png
+  String get earth => 'assets/planets/earth.png';
 
-  /// File path: assets/images/jupiter.png
-  String get jupiter => 'assets/images/jupiter.png';
+  /// File path: assets/planets/jupiter.png
+  String get jupiter => 'assets/planets/jupiter.png';
 
-  /// File path: assets/images/mars.png
-  String get mars => 'assets/images/mars.png';
+  /// File path: assets/planets/mars.png
+  String get mars => 'assets/planets/mars.png';
 
-  /// File path: assets/images/mercury.png
-  String get mercury => 'assets/images/mercury.png';
+  /// File path: assets/planets/mercury.png
+  String get mercury => 'assets/planets/mercury.png';
 
-  /// File path: assets/images/neptune.png
-  String get neptune => 'assets/images/neptune.png';
+  /// File path: assets/planets/neptune.png
+  String get neptune => 'assets/planets/neptune.png';
 
-  /// File path: assets/images/pluto.png
-  String get pluto => 'assets/images/pluto.png';
+  /// File path: assets/planets/saturn.png
+  String get saturn => 'assets/planets/saturn.png';
 
-  /// File path: assets/images/saturn.png
-  String get saturn => 'assets/images/saturn.png';
+  /// File path: assets/planets/uranus.png
+  String get uranus => 'assets/planets/uranus.png';
 
-  /// File path: assets/images/uranus.png
-  String get uranus => 'assets/images/uranus.png';
-
-  /// File path: assets/images/venus.png
-  String get venus => 'assets/images/venus.png';
+  /// File path: assets/planets/venus.png
+  String get venus => 'assets/planets/venus.png';
 
   /// List of all assets
   List<String> get values => [
@@ -46,7 +43,6 @@ class $AssetsImagesGen {
     mars,
     mercury,
     neptune,
-    pluto,
     saturn,
     uranus,
     venus,
@@ -56,5 +52,5 @@ class $AssetsImagesGen {
 class Assets {
   const Assets._();
 
-  static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsPlanetsGen planets = $AssetsPlanetsGen();
 }
