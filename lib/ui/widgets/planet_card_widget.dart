@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:weight_planet_calculator/model/planet_model.dart';
 import 'package:weight_planet_calculator/ui/common/custom_theme.dart';
 
 class PlanetCard extends StatelessWidget {
-  const PlanetCard({
+  const new({
     required this.planet,
     required this.onTap,
     this.isFullWidth = false,
@@ -23,7 +23,7 @@ class PlanetCard extends StatelessWidget {
 }
 
 class _HalfCard extends StatelessWidget {
-  const _HalfCard({required this.planet, required this.onTap});
+  const new({required this.planet, required this.onTap});
 
   final Planet planet;
   final VoidCallback onTap;
@@ -74,7 +74,7 @@ class _HalfCard extends StatelessWidget {
 }
 
 class _EarthCard extends StatelessWidget {
-  const _EarthCard({required this.planet, required this.onTap});
+  const new({required this.planet, required this.onTap});
 
   final Planet planet;
   final VoidCallback onTap;
@@ -145,7 +145,7 @@ class _EarthCard extends StatelessWidget {
 }
 
 class _Badge extends StatelessWidget {
-  const _Badge({required this.label, required this.color});
+  const new({required this.label, required this.color});
 
   final String label;
   final Color color;

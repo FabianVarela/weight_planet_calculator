@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AppColors {
   static const background = Color(0xFF0D0D1A);
@@ -97,7 +96,8 @@ class CustomTheme {
         primary: AppColors.primary,
         surface: AppColors.surface,
       ),
-      textTheme: GoogleFonts.barlowTextTheme(ThemeData.dark().textTheme),
+      // TODO(FV): Uncomment when fix package
+      // textTheme: GoogleFonts.barlowTextTheme(ThemeData.dark().textTheme),
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.background,
         elevation: 0,

@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:weight_planet_calculator/ui/common/custom_theme.dart';
 import 'package:weight_planet_calculator/ui/planet_list_view.dart';
 
 class App extends StatelessWidget {
-  const App({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:weight_planet_calculator/styles/generated/assets.gen.dart';
 
 class Planet {
-  const Planet({
+  const new({
     required this.name,
     required this.imagePath,
     required this.shaderPath,

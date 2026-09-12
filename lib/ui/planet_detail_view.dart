@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:weight_planet_calculator/model/planet_model.dart';
 import 'package:weight_planet_calculator/ui/common/custom_theme.dart';
 import 'package:weight_planet_calculator/ui/widgets/planet_shader_widget.dart';
 
 class PlanetDetailView extends HookWidget {
-  const PlanetDetailView({required this.planet, super.key});
+  const new({required this.planet, super.key});
 
   final Planet planet;
 
@@ -165,7 +165,7 @@ class PlanetDetailView extends HookWidget {
 }
 
 class _SectionTag extends StatelessWidget {
-  const _SectionTag({required this.label});
+  const new({required this.label});
 
   final String label;
 
@@ -183,7 +183,7 @@ class _SectionTag extends StatelessWidget {
 }
 
 class _SectionLabel extends StatelessWidget {
-  const _SectionLabel({required this.text});
+  const new({required this.text});
 
   final String text;
 
@@ -194,7 +194,7 @@ class _SectionLabel extends StatelessWidget {
 }
 
 class _WeightStepper extends StatelessWidget {
-  const _WeightStepper({required this.weight, required this.onChanged});
+  const new({required this.weight, required this.onChanged});
 
   final double weight;
   final ValueChanged<double> onChanged;
@@ -232,7 +232,7 @@ class _WeightStepper extends StatelessWidget {
 }
 
 class _StepButton extends StatelessWidget {
-  const _StepButton({required this.icon, required this.onTap});
+  const new({required this.icon, required this.onTap});
 
   final IconData icon;
   final VoidCallback onTap;
@@ -256,7 +256,7 @@ class _StepButton extends StatelessWidget {
 }
 
 class _PlanetInfoCard extends StatelessWidget {
-  const _PlanetInfoCard({required this.planet});
+  const new({required this.planet});
 
   final Planet planet;
 

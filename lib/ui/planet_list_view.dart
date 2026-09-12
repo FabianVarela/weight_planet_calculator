@@ -1,13 +1,11 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:weight_planet_calculator/model/planet_model.dart';
 import 'package:weight_planet_calculator/ui/common/custom_theme.dart';
 import 'package:weight_planet_calculator/ui/planet_detail_view.dart';
 import 'package:weight_planet_calculator/ui/widgets/planet_card_widget.dart';
 
 class PlanetListView extends StatelessWidget {
-  const PlanetListView({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +35,7 @@ class PlanetListView extends StatelessWidget {
 }
 
 class _PlanetGrid extends StatelessWidget {
-  const _PlanetGrid({required this.planets});
+  const new({required this.planets});
 
   final List<Planet> planets;
 
@@ -76,17 +74,15 @@ class _PlanetGrid extends StatelessWidget {
   }
 
   void _navigate(BuildContext context, Planet planet) {
-    unawaited(
-      Navigator.push<void>(
-        context,
-        MaterialPageRoute(builder: (_) => PlanetDetailView(planet: planet)),
-      ),
+    Navigator.push<void>(
+      context,
+      MaterialPageRoute(builder: (_) => PlanetDetailView(planet: planet)),
     );
   }
 }
 
 class _PlanetRow extends StatelessWidget {
-  const _PlanetRow({required this.left, this.right});
+  const new({required this.left, this.right});
 
   final Planet left;
   final Planet? right;
@@ -124,11 +120,9 @@ class _PlanetRow extends StatelessWidget {
   }
 
   void _navigate(BuildContext context, Planet planet) {
-    unawaited(
-      Navigator.push<void>(
-        context,
-        MaterialPageRoute(builder: (_) => PlanetDetailView(planet: planet)),
-      ),
+    Navigator.push<void>(
+      context,
+      MaterialPageRoute(builder: (_) => PlanetDetailView(planet: planet)),
     );
   }
 }

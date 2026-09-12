@@ -1,11 +1,9 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_shaders/flutter_shaders.dart';
+import 'package:material_ui/material_ui.dart';
 
 class PlanetShaderWidget extends HookWidget {
-  const PlanetShaderWidget({required this.assetKey, super.key});
+  const new({required this.assetKey, super.key});
 
   final String assetKey;
 
@@ -17,7 +15,7 @@ class PlanetShaderWidget extends HookWidget {
     final mouse = useState(Offset.zero);
 
     useEffect(() {
-      unawaited(controller.repeat());
+      controller.repeat();
       return null;
     }, const []);
 
@@ -45,11 +43,7 @@ class PlanetShaderWidget extends HookWidget {
 }
 
 class _PlanetPainter extends CustomPainter {
-  const _PlanetPainter({
-    required this.shader,
-    required this.time,
-    required this.mouse,
-  });
+  const new({required this.shader, required this.time, required this.mouse});
 
   final FragmentShader shader;
   final double time;
