@@ -14,7 +14,7 @@ dependencies:
   flutter_hooks: ^0.21.3+1
   flutter_shaders: ^0.1.5
   google_fonts: ^9.0.0
-  material_ui: ^1.6.0
+  material_ui: ^1.8.0
 
 dev_dependencies:
   build_runner: ^2.16.2
